@@ -46,8 +46,6 @@ $(function() {
 	  })
   });
 
-
-
 	function updateJobStatus() {
 		axios.get('/job_status')
 	  .then(function (response) {
