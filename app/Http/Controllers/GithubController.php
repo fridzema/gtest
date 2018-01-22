@@ -8,11 +8,46 @@ use GrahamCampbell\Markdown\Facades\Markdown;
 
 class GithubController extends Controller
 {
+    private $client;
+
+    public function __construct(\Github\Client $client)
+    {
+        $this->client = $client;
+    }
+
+    public function getProfileData()
+    {
+        try {
+            $profile = $this->client->api('current_user')->show();
+        } catch (\RuntimeException $e) {
+            dd($e);
+        }
+
+        return $profile;
+    }
+
     public function startAutofollower(Request $request)
     {
         return response()->json([
             'followers' => $this->autoLikeFollowers($request->input('username')),
         ]);
+    }
+
+    public function autoLikeFollowers($username)
+    {
+        try {
+            $user = $client->api('user')->show($username);
+
+            for ($x = 0; $x <= (round($user['followers'] / 30)); $x++) {
+                $pagenumber = $x + 1;
+
+                GetFollowers::dispatch($username, $pagenumber);
+            }
+        } catch (\RuntimeException $e) {
+            dd($e);
+        }
+
+        return $user['followers'];
     }
 
     public function startSpellChecker(Request $request)
@@ -25,19 +60,6 @@ class GithubController extends Controller
             'response' => $response,
             'suggestions_html' => $suggestions_html,
         ]);
-    }
-
-    public function autoLikeFollowers($username)
-    {
-        $user = GithubRequest('users/'.$username.'');
-
-        for ($x = 0; $x <= (round($user['followers'] / 100)); $x++) {
-            $pagenumber = $x + 1;
-
-            GetFollowers::dispatch($user['login'], $pagenumber);
-        }
-
-        return $user['followers'];
     }
 
     public function autoSpellChecker($username, $repo)

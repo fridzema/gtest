@@ -11,7 +11,8 @@
         "knplabs/github-api": "^2.7",
         "laravel/framework": "5.5.*",
         "laravel/horizon": "^1.1",
-        "php-http/guzzle6-adapter": "^1.1"
+        "php-http/guzzle6-adapter": "^1.1",
+        "renatomarinho/laravel-page-speed": "^1.8"
     },
     "require-dev": {
         "arubacao/php-cs-fixer-config": "^0.2.0",

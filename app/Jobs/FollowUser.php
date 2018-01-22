@@ -31,6 +31,16 @@ class FollowUser implements ShouldQueue
      */
     public function handle()
     {
-        $status = GithubRequest('user/following/'.$this->username, 'PUT');
+        $client->api('current_user')->follow()->follow($this->username);
+    }
+
+    /**
+     * Handle a job failure.
+     *
+     * @return void
+     */
+    public function failed()
+    {
+        // Called when the job is failing...
     }
 }
