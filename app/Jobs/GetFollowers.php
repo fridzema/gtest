@@ -33,7 +33,7 @@ class GetFollowers implements ShouldQueue
      */
     public function handle()
     {
-        $followers = $this->client->api('user')->followers($this->username, ['page' => $this->pagenumber]);
+        $followers = app('App\Http\Controllers\GithubController')->collectFollowersPerPage($this->username, $this->pagenumber);
 
         foreach ($followers as $follower) {
             FollowUser::dispatch($follower['login']);

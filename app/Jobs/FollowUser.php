@@ -31,7 +31,7 @@ class FollowUser implements ShouldQueue
      */
     public function handle()
     {
-        $client->api('current_user')->follow()->follow($this->username);
+        $follow_user = app('App\Http\Controllers\GithubController')->followUser($this->username);
     }
 
     /**

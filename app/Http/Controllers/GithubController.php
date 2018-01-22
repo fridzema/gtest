@@ -29,7 +29,7 @@ class GithubController extends Controller
     public function autoLikeFollowers($username)
     {
         try {
-            $user = $client->api('user')->show($username);
+            $user = $this->client->api('user')->show($username);
 
             for ($x = 0; $x <= (round($user['followers'] / 30)); $x++) {
                 $pagenumber = $x + 1;
@@ -41,6 +41,28 @@ class GithubController extends Controller
         }
 
         return $user['followers'];
+    }
+
+    public function collectFollowersPerPage($username, $pagenumber)
+    {
+        try {
+            $followers = $this->client->api('user')->followers($this->username, ['page' => $this->pagenumber]);
+        } catch (\RuntimeException $e) {
+            dd($e);
+        }
+
+        return $followers;
+    }
+
+    public function followUser($username)
+    {
+        try {
+            $follow_user = $client->api('current_user')->follow()->follow($username);
+        } catch (\RuntimeException $e) {
+            dd($e);
+        }
+
+        return $follow_user;
     }
 
     public function startSpellChecker(Request $request)

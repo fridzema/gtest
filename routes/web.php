@@ -13,9 +13,5 @@
 
 Route::get('/', 'IndexController@index');
 Route::get('/job_status', 'IndexController@getJobStatus');
-Route::post('/start_autofollower', 'GithubController@startAutofollower');
-Route::post('/start_spellchecker', 'GithubController@startSpellChecker');
-
-Route::prefix('github')->group(function () {
-    Route::get('autofollow/{username}', 'GithubController@autofollow');
-});
+Route::post('/start_autofollower', 'IndexController@startAutofollower');
+Route::post('/start_spellchecker', 'IndexController@index@startSpellChecker');
