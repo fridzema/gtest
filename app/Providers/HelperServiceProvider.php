@@ -23,8 +23,6 @@ class HelperServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        require_once app_path('Helpers/Github.php');
         require_once app_path('Helpers/Spellchecker.php');
-        require_once app_path('Helpers/Jobs.php');
     }
 }

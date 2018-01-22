@@ -26,13 +26,6 @@ class GithubController extends Controller
         return $profile;
     }
 
-    public function startAutofollower(Request $request)
-    {
-        return response()->json([
-            'followers' => $this->autoLikeFollowers($request->input('username')),
-        ]);
-    }
-
     public function autoLikeFollowers($username)
     {
         try {
