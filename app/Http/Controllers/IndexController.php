@@ -21,6 +21,8 @@ class IndexController extends Controller
 
     public function index()
     {
+
+        // https://www.sitepoint.com/use-githubs-api-php/
         try {
             $profile = $this->client->api('current_user')->show();
         } catch (\RuntimeException $e) {
