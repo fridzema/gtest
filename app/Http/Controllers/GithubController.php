@@ -46,7 +46,7 @@ class GithubController extends Controller
     public function collectFollowersPerPage($username, $pagenumber)
     {
         try {
-            $followers = $this->client->api('user')->followers($this->username, ['page' => $this->pagenumber]);
+            $followers = $this->client->api('user')->followers($username, ['page' => $pagenumber]);
         } catch (\RuntimeException $e) {
             dd($e);
         }
@@ -57,7 +57,7 @@ class GithubController extends Controller
     public function followUser($username)
     {
         try {
-            $follow_user = $client->api('current_user')->follow()->follow($username);
+            $follow_user = $this->client->api('current_user')->follow()->follow($username);
         } catch (\RuntimeException $e) {
             dd($e);
         }
