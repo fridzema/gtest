@@ -26,6 +26,13 @@ class GithubController extends Controller
         return $profile;
     }
 
+    public function getProfileDataJson()
+    {
+      $profile = $this->getProfileData();
+
+      return response()->json($profile);
+    }
+
     public function autoLikeFollowers($username)
     {
         try {
@@ -36,6 +43,23 @@ class GithubController extends Controller
 
                 GetFollowers::dispatch($username, $pagenumber);
             }
+        } catch (\RuntimeException $e) {
+            dd($e);
+        }
+
+        return $user['followers'];
+    }
+
+    public function autoUnfollowUsers($ammount)
+    {
+        try {
+            $user = $this->client->api('user')->show('fridzema');
+            dd($user);
+            // for ($x = 0; $x <= (round($user['followers'] / 30)); $x++) {
+            //     $pagenumber = $x + 1;
+
+            //     GetFollowers::dispatch($username, $pagenumber);
+            // }
         } catch (\RuntimeException $e) {
             dd($e);
         }

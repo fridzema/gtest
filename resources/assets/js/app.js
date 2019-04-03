@@ -7,52 +7,23 @@
 
 require('./bootstrap');
 
-$(function() {
-  window.setInterval(updateJobStatus, 10000);
 
-	var jobStatus = $('body').find('.job_status');
 
-  var autoFollowForm = $('body').find('#autofollow_form');
-  var autoFollowFormSubmit = $(autoFollowForm).find('.button');
+window.Vue = require('vue');
+// Vue.use(require('vue-resource'));
 
-  var repoSpellCheckForm = $('body').find('#repospellcheck');
-  var repoSpellCheckFormSubmit = $(repoSpellCheckForm).find('.button');
+Vue.component('profile', require('./components/Profile.vue'), {
+  data: {
+    profile: {}
+  }
+});
 
-  $(autoFollowFormSubmit).on('click', function(e){
-  	e.preventDefault();
+Vue.component('social-tools', require('./components/SocialTools.vue'));
+Vue.component('spell-checker', require('./components/SpellChecker.vue'));
 
-  	$(autoFollowFormSubmit).addClass('disabled');
+const app = new Vue({
+    el: '#app',
+    // data: {
 
-		axios.post('/start_autofollower', {
-	    username: $(autoFollowForm).find('input[name="username"]').val()
-	  })
-	  .then(function (response) {
-	    $(autoFollowForm).html('<div class="ui segment">Followers: '+ response.data.followers +'</div>')
-	  })
-  });
-
-  $(repoSpellCheckFormSubmit).on('click', function(e){
-  	e.preventDefault();
-
-  	$(repoSpellCheckFormSubmit).addClass('disabled');
-
-		axios.post('/start_spellchecker', {
-	    username: $(repoSpellCheckForm).find('input[name="username"]').val(),
-	    repo: $(repoSpellCheckForm).find('input[name="repo"]').val()
-	  })
-	  .then(function (response) {
-	  	console.log(response.data);
-	    $(repoSpellCheckForm).html(response.data.suggestions_html)
-	  })
-  });
-
-	function updateJobStatus() {
-		axios.get('/job_status')
-	  .then(function (response) {
-	  	$(jobStatus).find('.pending').html(response.data.pending_jobs);
-	  	$(jobStatus).find('.failed').html(response.data.failed_jobs);
-	  })
-	}
-
-	updateJobStatus()
+    // }
 });

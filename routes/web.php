@@ -15,3 +15,4 @@ Route::get('/', 'IndexController@index');
 Route::get('/job_status', 'IndexController@getJobStatus');
 Route::post('/start_autofollower', 'IndexController@startAutofollower');
 Route::post('/start_spellchecker', 'IndexController@index@startSpellChecker');
+Route::get('profile_data', 'GithubController@getProfileData');
